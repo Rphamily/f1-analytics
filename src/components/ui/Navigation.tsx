@@ -8,7 +8,7 @@ import { Menu, X, Flag, Sun, Moon } from 'lucide-react';
 const navLinks = [
   { href: '/', label: 'Race Weekend' },
   { href: '/predict', label: 'Predict' },
-  { href: '/ml', label: 'ML Ratings', badge: 'ML' },
+  { href: '/ml-ratings', label: 'ML Ratings', badge: 'ML' },
   { href: '/championship', label: 'Championship', badge: 'BAYES' },
   { href: '/simulator', label: 'Simulator', badge: 'MC' },
   { href: '/cards', label: 'Driver Cards' },
@@ -95,3 +95,4 @@ export default function Navigation() {
     </nav>
   );
 }
+
