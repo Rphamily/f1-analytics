@@ -1,10 +1,10 @@
-import { getCurrentStandings } from '../../lib/api/f1-api';
+﻿import { getCurrentStandings } from '../../lib/api/f1-api';
 import StandingsClient from './StandingsClient';
 
 export const revalidate = 3600;
 
 export default async function StandingsPage() {
-  let standings = [];
+  let standings: any[] = [];
   try {
     standings = await getCurrentStandings();
   } catch {
@@ -12,3 +12,4 @@ export default async function StandingsPage() {
   }
   return <StandingsClient standings={standings} />;
 }
+

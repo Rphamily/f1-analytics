@@ -1,25 +1,25 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
-import { TEAM_COLORS, LEGEND_RATINGS } from '../../lib/ml/race-predictor';
+
 import { TEAM_COLORS as TEAM_COLOR_MAP } from '../../lib/api/f1-api';
 import { TrendingUp, Award } from 'lucide-react';
 
 const ALL_DRIVERS = [
   // Current
-  { driverId: 'max_verstappen', name: 'Max Verstappen', era: '2015-present', nationality: '🇳🇱', team: 'Red Bull', constructorId: 'red_bull', titles: 4, wins: 62, poles: 40, podiums: 108, fastest: 31, elo: 2120 },
-  { driverId: 'norris', name: 'Lando Norris', era: '2019-present', nationality: '🇬🇧', team: 'McLaren', constructorId: 'mclaren', titles: 0, wins: 6, poles: 6, podiums: 25, fastest: 6, elo: 1890 },
-  { driverId: 'leclerc', name: 'Charles Leclerc', era: '2018-present', nationality: '🇲🇨', team: 'Ferrari', constructorId: 'ferrari', titles: 0, wins: 8, poles: 24, podiums: 34, fastest: 8, elo: 1920 },
-  { driverId: 'hamilton', name: 'Lewis Hamilton', era: '2007-present', nationality: '🇬🇧', team: 'Ferrari', constructorId: 'ferrari', titles: 7, wins: 103, poles: 104, podiums: 201, fastest: 67, elo: 2180 },
-  { driverId: 'alonso', name: 'Fernando Alonso', era: '2001-present', nationality: '🇪🇸', team: 'Aston Martin', constructorId: 'aston_martin', titles: 2, wins: 32, poles: 22, podiums: 106, fastest: 23, elo: 2040 },
-  { driverId: 'russell', name: 'George Russell', era: '2019-present', nationality: '🇬🇧', team: 'Mercedes', constructorId: 'mercedes', titles: 0, wins: 3, poles: 5, podiums: 14, fastest: 9, elo: 1870 },
+  { driverId: 'max_verstappen', name: 'Max Verstappen', era: '2015-present', nationality: 'ðŸ‡³ðŸ‡±', team: 'Red Bull', constructorId: 'red_bull', titles: 4, wins: 62, poles: 40, podiums: 108, fastest: 31, elo: 2120 },
+  { driverId: 'norris', name: 'Lando Norris', era: '2019-present', nationality: 'ðŸ‡¬ðŸ‡§', team: 'McLaren', constructorId: 'mclaren', titles: 0, wins: 6, poles: 6, podiums: 25, fastest: 6, elo: 1890 },
+  { driverId: 'leclerc', name: 'Charles Leclerc', era: '2018-present', nationality: 'ðŸ‡²ðŸ‡¨', team: 'Ferrari', constructorId: 'ferrari', titles: 0, wins: 8, poles: 24, podiums: 34, fastest: 8, elo: 1920 },
+  { driverId: 'hamilton', name: 'Lewis Hamilton', era: '2007-present', nationality: 'ðŸ‡¬ðŸ‡§', team: 'Ferrari', constructorId: 'ferrari', titles: 7, wins: 103, poles: 104, podiums: 201, fastest: 67, elo: 2180 },
+  { driverId: 'alonso', name: 'Fernando Alonso', era: '2001-present', nationality: 'ðŸ‡ªðŸ‡¸', team: 'Aston Martin', constructorId: 'aston_martin', titles: 2, wins: 32, poles: 22, podiums: 106, fastest: 23, elo: 2040 },
+  { driverId: 'russell', name: 'George Russell', era: '2019-present', nationality: 'ðŸ‡¬ðŸ‡§', team: 'Mercedes', constructorId: 'mercedes', titles: 0, wins: 3, poles: 5, podiums: 14, fastest: 9, elo: 1870 },
   // Legends
-  { driverId: 'senna', name: 'Ayrton Senna', era: '1984-1994', nationality: '🇧🇷', team: 'McLaren', constructorId: 'mclaren', titles: 3, wins: 41, poles: 65, podiums: 80, fastest: 19, elo: 2100 },
-  { driverId: 'schumacher', name: 'Michael Schumacher', era: '1991-2012', nationality: '🇩🇪', team: 'Ferrari', constructorId: 'ferrari', titles: 7, wins: 91, poles: 68, podiums: 155, fastest: 77, elo: 2150 },
-  { driverId: 'prost', name: 'Alain Prost', era: '1980-1993', nationality: '🇫🇷', team: 'McLaren', constructorId: 'mclaren', titles: 4, wins: 51, poles: 33, podiums: 106, fastest: 41, elo: 2070 },
-  { driverId: 'vettel', name: 'Sebastian Vettel', era: '2007-2022', nationality: '🇩🇪', team: 'Red Bull', constructorId: 'red_bull', titles: 4, wins: 53, poles: 57, podiums: 122, fastest: 38, elo: 2050 },
-  { driverId: 'lauda', name: 'Niki Lauda', era: '1971-1985', nationality: '🇦🇹', team: 'Ferrari', constructorId: 'ferrari', titles: 3, wins: 25, poles: 24, podiums: 54, fastest: 24, elo: 2020 },
-  { driverId: 'clark', name: 'Jim Clark', era: '1960-1968', nationality: '🇬🇧', team: 'Lotus', constructorId: 'williams', titles: 2, wins: 25, poles: 33, podiums: 32, fastest: 28, elo: 1980 },
+  { driverId: 'senna', name: 'Ayrton Senna', era: '1984-1994', nationality: 'ðŸ‡§ðŸ‡·', team: 'McLaren', constructorId: 'mclaren', titles: 3, wins: 41, poles: 65, podiums: 80, fastest: 19, elo: 2100 },
+  { driverId: 'schumacher', name: 'Michael Schumacher', era: '1991-2012', nationality: 'ðŸ‡©ðŸ‡ª', team: 'Ferrari', constructorId: 'ferrari', titles: 7, wins: 91, poles: 68, podiums: 155, fastest: 77, elo: 2150 },
+  { driverId: 'prost', name: 'Alain Prost', era: '1980-1993', nationality: 'ðŸ‡«ðŸ‡·', team: 'McLaren', constructorId: 'mclaren', titles: 4, wins: 51, poles: 33, podiums: 106, fastest: 41, elo: 2070 },
+  { driverId: 'vettel', name: 'Sebastian Vettel', era: '2007-2022', nationality: 'ðŸ‡©ðŸ‡ª', team: 'Red Bull', constructorId: 'red_bull', titles: 4, wins: 53, poles: 57, podiums: 122, fastest: 38, elo: 2050 },
+  { driverId: 'lauda', name: 'Niki Lauda', era: '1971-1985', nationality: 'ðŸ‡¦ðŸ‡¹', team: 'Ferrari', constructorId: 'ferrari', titles: 3, wins: 25, poles: 24, podiums: 54, fastest: 24, elo: 2020 },
+  { driverId: 'clark', name: 'Jim Clark', era: '1960-1968', nationality: 'ðŸ‡¬ðŸ‡§', team: 'Lotus', constructorId: 'williams', titles: 2, wins: 25, poles: 33, podiums: 32, fastest: 28, elo: 1980 },
 ];
 
 type DriverData = typeof ALL_DRIVERS[0];
@@ -52,7 +52,7 @@ function DriverSelect({ value, onChange, exclude }: { value: DriverData | null; 
               <div className="w-1 h-8 rounded flex-shrink-0" style={{ background: color }} />
               <div>
                 <div className="f1-subheading text-white text-sm">{driver.name}</div>
-                <div className="f1-mono text-xs" style={{ color }}>{driver.team} · {driver.era}</div>
+                <div className="f1-mono text-xs" style={{ color }}>{driver.team} Â· {driver.era}</div>
               </div>
               <div className="ml-auto f1-heading text-xl text-white/20">{driver.elo}</div>
             </button>
@@ -182,3 +182,4 @@ export default function ComparePage() {
     </div>
   );
 }
+
