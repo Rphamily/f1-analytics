@@ -1,4 +1,4 @@
-// lib/api/f1-api.ts
+﻿// lib/api/f1-api.ts
 // Data sources: Ergast API (historical) + OpenF1 API (live/current)
 
 const ERGAST_BASE = 'https://ergast.com/api/f1';
@@ -121,7 +121,7 @@ export async function getNextRace(): Promise<Race | null> {
 
 // Ergast: Current driver standings
 export async function getCurrentStandings(): Promise<StandingsEntry[]> {
-  const res = await fetch(`${ERGAST_BASE}/current/driverStandings.json`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${ERGAST_BASE}/2026/driverStandings.json`, { next: { revalidate: 3600 } });
   const data = await res.json();
   return data.MRData.StandingsTable.StandingsLists[0]?.DriverStandings || [];
 }
@@ -277,3 +277,5 @@ export function msToLapTime(ms: number): string {
   const seconds = ((ms % 60000) / 1000).toFixed(3);
   return `${minutes}:${parseFloat(seconds) < 10 ? '0' : ''}${seconds}`;
 }
+
+
