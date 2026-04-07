@@ -1,6 +1,7 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import '../styles/globals.css';
 import Navigation from '../components/ui/Navigation';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'F1 Analytics | Race Predictions & Driver Comparisons',
@@ -39,16 +40,18 @@ export default function RootLayout({
               <span className="text-[#E10600]">F1</span> ANALYTICS
             </div>
             <p className="text-white/30 text-sm font-mono text-center">
-              Data sourced from Ergast API & OpenF1 API · Built for portfolio demonstration · Not affiliated with Formula 1
+              Data sourced from Ergast API & OpenF1 API Â· Built for portfolio demonstration Â· Not affiliated with Formula 1
             </p>
             <div className="flex gap-4 text-white/30 text-sm">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-              <span>·</span>
+              <span>Â·</span>
               <a href="#" className="hover:text-white transition-colors">About</a>
             </div>
           </div>
         </footer>
-      </body>
+        <Analytics />
+    </body>
     </html>
   );
 }
+
