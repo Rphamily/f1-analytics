@@ -227,6 +227,24 @@ export default function CardsPage() {
   const [search, setSearch] = useState('');
   const [sel, setSel] = useState<Card[]>([]);
   const [showCompare, setShowCompare] = useState(false);
+  useEffect(() => {
+  const year = new Date().getFullYear();
+  fetch(`https://api.jolpi.ca/ergast/f1/${year}/driverStandings.json`)
+    .then(r => r.json())
+    .then(json => {
+      const standings = json.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings ?? [];
+      standings.forEach((s: any) => {
+        const id = s.Driver.driverId;
+        const card = GRID_2026.find(d => d.driverId === id);
+        if (card) {
+          card.wins = parseInt(s.wins) || card.wins;
+          card.team = s.Constructors?.[0]?.name ?? card.team;
+          card.cid = s.Constructors?.[0]?.constructorId ?? card.cid;
+        }
+      });
+    })
+    .catch(() => {});
+}, []);
   const [headshotMap, setHeadshotMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
